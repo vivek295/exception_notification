@@ -22,6 +22,7 @@ module ExceptionNotifier
   autoload :SnsNotifier, 'exception_notifier/sns_notifier'
   autoload :GoogleChatNotifier, 'exception_notifier/google_chat_notifier'
   autoload :DatadogNotifier, 'exception_notifier/datadog_notifier'
+  autoload :TeamWebhookNotifier, 'exception_notifier/team_webhook_notifier'
 
   class UndefinedNotifierError < StandardError; end
 
