@@ -16,7 +16,13 @@ module ExceptionNotifier
 
       uri = URI.parse(url)
       req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
-      message = "[#{env} Error]: " + (exception.is_a?(String) ? exception : exception.backtrace.join("\n"))
+
+      message = if options[:simplified]
+                  "[#{env} Error]: " + (exception.is_a?(String) ? exception : exception.backtrace.reject{|l| l =~ %r|\A[^:]*/gems/|}.join("\n"))
+                else
+                  "[#{env} Error]: " + (exception.is_a?(String) ? exception : exception.backtrace.join("\n"))
+                end
+
       req.body = { text: message }.to_json
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
