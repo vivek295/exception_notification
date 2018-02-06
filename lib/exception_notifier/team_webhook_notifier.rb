@@ -25,7 +25,7 @@ module ExceptionNotifier
                   exception.backtrace.join("\n")
                 end
 
-      req.body = { text: error_precedence + message }.to_json
+      req.body = { text: "```#{error_precedence + message}```" }.to_json
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
